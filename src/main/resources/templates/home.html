@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/home.css}"/>
+<body>
+
+<h3 class="container">Coronavirus Tracker</h3>
+
+<div class="card contain">
+    <h4>Cases</h4>
+    <div class="card-body">
+        <h4>Nowdays</h4>
+        <p th:text="${totalCases}"></p>
+    </div>
+    <div class="card-body">
+        <h4>Incresed Cases since yesterday</h4>
+        <p th:text="${incCases}"></p>
+    </div>
+</div>
+
+<div class="mb-3 contain">
+    <form th:action="@{/}" th:object="${place}" method="post" modelattribute="place">
+    <label for="place" class="form-label">Search Country</label>
+    <input type="text" class="form-control" id="place" placeholder="Country" name="place">
+    <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </form>
+</div>
+
+<table class="table table-striped contain">
+    <tr>
+
+        <th>Country</th>
+        <th>State</th>
+        <th>Reported Cases</th>
+        <th>Incresed Cases</th>
+    </tr>
+    <tr th:each="stat : ${PlacesStats}">
+        <td th:text="${stat.country}"></td>
+        <td th:text="${stat.state}"></td>
+        <td th:text="${stat.latestRecord}">0</td>
+        <td th:text="${stat.incresedCases}">0</td>
+    </tr>
+</table>
+
+</body>
+</html>
