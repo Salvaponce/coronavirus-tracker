@@ -32,12 +32,12 @@ public class HomeControler {
     @PostMapping("/")
     public String newhome(@RequestParam String place, Model model){
         List<PlacesStats> stats = coronavirusData.getStats();
-        int totalCases = stats.stream().mapToInt(stat -> stat.getLatestRecord()).sum();
-        int incresedCases = stats.stream().mapToInt(stat -> stat.getIncresedCases()).sum();
+        int totalCases = stats.stream().mapToInt(PlacesStats::getLatestRecord).sum();
+        int incresedCases = stats.stream().mapToInt(PlacesStats::getIncresedCases).sum();
         List<PlacesStats> statsFiltered = stats.stream()
-                .filter(stat -> stat.getCountry().toLowerCase().equals(place.toLowerCase())).collect(Collectors.toList());
-        System.out.println(stats.toString());
-        System.out.println(statsFiltered.toString());
+                .filter(stat -> stat.getCountry().equalsIgnoreCase(place)).collect(Collectors.toList());
+        System.out.println(stats);
+        System.out.println(statsFiltered);
         model.addAttribute("PlacesStats", statsFiltered);
         model.addAttribute("totalCases", totalCases);
         model.addAttribute("incCases", incresedCases);
